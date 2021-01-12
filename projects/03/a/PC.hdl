@@ -17,4 +17,12 @@ CHIP PC {
 
     PARTS:
     // Put your code here:
+    Or8Way(in[0]=reset, in[1]=load, in[2]=inc, out=l);
+    Not16(in[0]=reset, out[0]=nr, in[1]=load, out[1]=nl);
+    And(a=nr, b=nl, out=nrANDnl);
+    Or(a=reset, b=load, out=rORl);
+    Or(a=reset, b=nl, out=rORnl);
+    ALU(x=in, y=pout, zx=rORnl, nx=nrANDnl, zy=rORl, ny=nr, f=nl, no=nrANDnl, out=alu);
+
+    Register(in=alu, load=l, out=out, out=pout);
 }
